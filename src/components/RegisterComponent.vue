@@ -114,6 +114,7 @@ const handleSubmit = async () => {
     border-radius: 4px;
     padding: 0 10px;
     transition: border-color 0.3s;
+    font-size: 1.3rem;
   }
 
   input:focus{
