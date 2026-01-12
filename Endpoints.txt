@@ -1,0 +1,21 @@
+Endpoints:
+REGISTER:
+https://mysystem-c6ecfc1b7c0f.herokuapp.com/api/Auth/register
+
+Campos:
+{
+  "name": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string"
+}
+
+
+LOGIN:
+https://mysystem-c6ecfc1b7c0f.herokuapp.com/api/Auth/login
+
+Campos:
+{
+  "email": "string",
+  "password": "string"
+}

@@ -10,9 +10,13 @@
     password: ''
     });
 
-    const handleSubmit = () => {
-    login(formData.value.email, formData.value.password);
-    };
+const handleSubmit = async () => {
+  const success = await login(formData.value);
+  if (success) {
+    // Redirigir al dashboard tras login exitoso
+    // router.push('/dashboard'); 
+  }
+};
 </script>
 
 
@@ -28,12 +32,12 @@
       </p>
 
       <div class="boxes">
-        <label class="form-labels" for="user_email">Email</label>
+        <label class="form-labels" for="user_email-login">Email</label>
         <input id="user_email-login" v-model="formData.email" type="email" placeholder="Your email" required>
       </div>
 
       <div class="boxes">
-        <label class="form-labels" for="user_password">Password</label>
+        <label class="form-labels" for="user_password-login">Password</label>
         <input id="user_password-login" v-model="formData.password" type="password" placeholder="Your password" required>
       </div>
 

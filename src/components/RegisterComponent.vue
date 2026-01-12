@@ -4,15 +4,19 @@
 
   const { register, message, isError } = useAuth();
 
-  const formData = ref({
-    name: '',
-    email: '',
-    password: ''
-  });
+ const formData = ref({
+  name: '',
+  lastName: '', // Añadido
+  email: '',
+  password: ''
+});
 
-  const handleSubmit = () => {
-    register(formData.value.name, formData.value.email, formData.value.password);
-  };
+const handleSubmit = async () => {
+  const success = await register(formData.value);
+  if (success) {
+    // Opcional: limpiar formulario o redirigir
+  }
+};
 </script>
 
 
@@ -30,6 +34,11 @@
       <div class="boxes">
         <label class="form-labels" for="user_name">Name</label>
         <input id="user_name" v-model="formData.name" type="text" placeholder="Your name" required>
+      </div>
+
+      <div class="boxes">
+        <label class="form-labels" for="user_lastname">Lastname</label>
+        <input id="user_lastname" v-model="formData.lastName" type="text" placeholder="Your lastname" required>
       </div>
 
       <div class="boxes">
