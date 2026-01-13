@@ -1,3 +1,6 @@
+# El .env siempre se debe ignorar en este archivo
+# .env
+
 # Logs
 logs
 *.log

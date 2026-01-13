@@ -1,22 +1,30 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+import { ref } from 'vue';
   import { useAuth } from '../composables/useAuth';
 
   const { register, message, isError } = useAuth();
 
- const formData = ref({
-  name: '',
-  lastName: '', // Añadido
-  email: '',
-  password: ''
-});
+  // Definimos el estado inicial para poder reutilizarlo
+  const initialState = {
+    name: '',
+    lastName: '',
+    email: '',
+    password: ''
+  };
 
-const handleSubmit = async () => {
-  const success = await register(formData.value);
-  if (success) {
-    // Opcional: limpiar formulario o redirigir
-  }
-};
+  const formData = ref({ ...initialState });
+
+  const handleSubmit = async () => {
+    const success = await register(formData.value);
+    
+    if (success) {
+      // 1. Limpiamos el formulario asignando el estado inicial
+      formData.value = { ...initialState };
+      
+      // 2. Opcional: Podrías limpiar el mensaje después de unos segundos
+      setTimeout(() => { message.value = '' }, 4000);
+    }
+  };
 </script>
 
 
