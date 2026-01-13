@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
     import { useAuth } from '../composables/useAuth';
 
     const {login, message, isError } = useAuth();
-
+    const router = useRouter();
 
     const formData = ref({
     email: '',
@@ -15,6 +16,8 @@ const handleSubmit = async () => {
   if (success) {
     // Redirigir al dashboard tras login exitoso
     // router.push('/dashboard'); 
+    console.log("Redirigiendo...");
+    router.push('/dashboard');
   }
 };
 </script>
