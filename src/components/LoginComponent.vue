@@ -15,10 +15,16 @@
     const handleSubmit = async () => {
         const success = await login(formData.value);
         if (success) {
-            // Redirigir al dashboard tras login exitoso
-            // router.push('/dashboard'); 
-            console.log("Redirigiendo...");
-            router.push('/dashboard');
+            // Obtenemos los datos que useAuth acaba de guardar
+            const userSession = JSON.parse(localStorage.getItem("userSession") || '{}');
+
+            console.log("Redirigiendo según su role...");
+
+            if ( userSession.role === 1){
+              router.push('/users-list');     // Si es Admin
+            } else {
+              router.push('/dashboard');      // Si es User
+            }
         }
     };
 </script>

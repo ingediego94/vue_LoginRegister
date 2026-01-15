@@ -21,8 +21,15 @@ export function useAuth() {
       // 1. Guardamos el token para validación de seguridad
       localStorage.setItem("token", response.token); 
       
-      // 2. Simulamos/Guardamos los datos del usuario para la UI
-      const userData = { name: data.email.split('@')[0], email: data.email };
+      // 2. GUARDAMOS TODO EL OBJETO: Ahora incluye el role real del backend
+      const userData = { 
+        id: response.id, 
+        name: response.name,
+        // email: response.lastName,
+        email: response.email,
+        role: response.role
+      };
+
       localStorage.setItem("userSession", JSON.stringify(userData));
       currentUser.value = userData;
 

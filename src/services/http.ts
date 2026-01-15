@@ -11,4 +11,18 @@ const apiClient = axios.create({
   }
 });
 
+
+// INTERCEPTOR: Esto es como un filtro que revisa cada salida al backend
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); // Sacamos el token guardado
+  
+  if (token) {
+    // Lo ponemos en las cabeceras como espera el backend (Bearer Token)
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  
+  return config;
+});
+
+
 export default apiClient;
