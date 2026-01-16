@@ -22,7 +22,11 @@ apiClient.interceptors.request.use((config) => {
   }
   
   return config;
-});
+},
+  (error) => {
+    return Promise.reject(error); // Maneja errores de envío
+  }
+)
 
 
 export default apiClient;
