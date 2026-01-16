@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth';
+// Importamos nuestros nuevos componentes
+import UserProfile from '../components/UserProfile.vue';
+import InfoCard from '../components/InfoCard.vue';
 
 const router = useRouter();
 const { currentUser, logout } = useAuth();
@@ -12,59 +15,48 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <div class="dashboard-container">
-    <div class="card" v-if="currentUser">
-      <h1>Bienvenido, {{ currentUser.name }}</h1>
-      <p>Has iniciado sesión con el correo: <strong>{{ currentUser.email }}</strong></p>
-      <button @click="handleLogout" class="logout-btn">Cerrar Sesión</button>
+  <div class="container mt-5">
+    <div v-if="currentUser" class="row justify-content-center">
+      
+      <div class="col-md-9">
+        <UserProfile 
+          :nombre="currentUser.name" 
+          :email="currentUser.email" 
+          @logout="handleLogout" 
+        />
+      </div>
+
+      <div class="col-md-4">
+        <InfoCard 
+          titulo="Mi Paisaje" 
+          descripcion="Una imagen bonita para el dashboard."
+          imagenUrl="https://picsum.photos/400/250?random=1" 
+        />
+      </div>
+      
+      <div class="col-md-4">
+        <InfoCard 
+          titulo="Otra foto de paisaje" 
+          descripcion="Otra hermosa foto de paisaje."
+          imagenUrl="https://picsum.photos/400/250?random=2" 
+        />
+      </div>
+
     </div>
-    
-    <div v-else class="card error-card">
-      <h2>Acceso Denegado</h2>
-      <p>No tienes permiso para estar aquí. Por favor inicia sesión.</p>
-      <router-link to="/login" class="login-link">Ir al Login</router-link>
+
+    <div v-else class="row justify-content-center">
+      <div class="col-md-6 text-center shadow p-5 bg-white rounded">
+        <h2 class="text-danger">Acceso Denegado</h2>
+        <p>Por favor, inicia sesión para continuar.</p>
+        <router-link to="/login" class="btn btn-primary">Ir al Login</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.dashboard-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  font-family: sans-serif;
-}
-.card {
-  padding: 2.5rem;
-  border: 2px solid blueviolet;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  background: white;
-}
-.error-card {
-  border-color: #ff4757;
-}
-.logout-btn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background-color: #ff4757;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-.logout-btn:hover {
-  background-color: #ff2e44;
-}
-.login-link {
-  display: inline-block;
-  margin-top: 15px;
-  color: blueviolet;
-  text-decoration: none;
-  font-weight: bold;
+/* Ya no necesitamos tanto CSS manual porque Bootstrap hace el trabajo pesado */
+.container {
+  max-width: 1000px;
 }
 </style>
