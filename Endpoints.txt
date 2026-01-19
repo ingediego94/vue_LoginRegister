@@ -1,6 +1,8 @@
 Endpoints:
+https://mysystem-c6ecfc1b7c0f.herokuapp.com
+
 REGISTER:
-https://mysystem-c6ecfc1b7c0f.herokuapp.com/api/Auth/register
+/api/Auth/register
 
 Campos:
 {
@@ -12,10 +14,53 @@ Campos:
 
 
 LOGIN:
-https://mysystem-c6ecfc1b7c0f.herokuapp.com/api/Auth/login
+/api/Auth/login
 
 Campos:
 {
   "email": "string",
   "password": "string"
 }
+
+
+
+REFRESH:
+/api/Auth/refresh       = refresh
+
+
+
+REVOKE:
+/api/Auth/revoke        = revoke
+
+
+
+
+User:
+GET ALL:
+api/User/getAll         = get all users
+
+retorna
+[
+  {
+    "id": 0,
+    "userId": 0,
+    "urlImage": "string",
+    "active": true,
+    "createdAt": "2026-01-19T12:56:32.091Z",
+    "updatedAt": "2026-01-19T12:56:32.091Z"
+  }
+]
+
+
+
+
+
+api/User/getById/{id}   = get by id
+api/User/update/{id}    = update an user
+api/User/delete/{id}    = delete an user
+
+Photos:
+api/photos/getAll       = get all photos
+api/photos/create       = upload new photo
+api/photos/status/{id}  = change photos status 
+api/photos/delete/{id}  = delete a photo

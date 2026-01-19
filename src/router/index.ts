@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RegisterView from '../views/RegisterView.vue'
-import LoginView from '../views/LoginView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import UsersListView from '../views/UsersListView.vue'
-import { nextTick } from 'vue'
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -11,23 +7,23 @@ const router = createRouter({
         {
             path: '/register',
             name: 'register',
-            component: RegisterView
+            component: () => import('../views/RegisterView.vue')
         },
         {
             path: '/login',
             name: 'login',
-            component: LoginView
+            component: () => import('../views/LoginView.vue')
         },
         { 
             path: '/dashboard', 
             name: 'dashboard', 
-            component: DashboardView,
+            component: () => import('../views/DashboardView.vue'),
             meta: {requiresAuth: true}     // requiere estar logueado.
         },
         {
-            path: '/users-list',
-            name: 'users-list',
-            component: UsersListView,
+            path: '/admin-home',
+            name: 'admin-home',
+            component: () => import('../views/AdminHomeView.vue'),
             meta: {requiresAuth: true}
         },
         { path: '/', redirect: '/login'}
@@ -46,7 +42,7 @@ router.beforeEach((to, from, next) => {
     }
     // 2. Si ya esta logueado y trata de ir al login, lo mandamos su sitio.
     else if (to.path === '/login' && token) {
-        if (userSession.role === 1) next( '/users-list');
+        if (userSession.role === 1) next( '/admin-home');
         else next('/dashboard');
     }
     else {

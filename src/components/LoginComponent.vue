@@ -21,7 +21,7 @@
             console.log("Redirigiendo según su role...");
 
             if ( userSession.role === 1){
-              router.push('/users-list');     // Si es Admin
+              router.push('/admin-home');     // Si es Admin
             } else {
               router.push('/dashboard');      // Si es User
             }
