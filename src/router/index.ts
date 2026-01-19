@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -18,36 +17,46 @@ const router = createRouter({
             path: '/dashboard', 
             name: 'dashboard', 
             component: () => import('../views/DashboardView.vue'),
-            meta: {requiresAuth: true}     // requiere estar logueado.
+            meta: { requiresAuth: true }
         },
         {
             path: '/admin-home',
             name: 'admin-home',
             component: () => import('../views/AdminHomeView.vue'),
-            meta: {requiresAuth: true}
+            meta: { requiresAuth: true }
         },
-        { path: '/', redirect: '/login'}
+        { path: '/', redirect: '/login' }
     ]
 })
 
-
-// GUARDIA DE SEGURIDAD (Navigation Guard)
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
-    const userSession = JSON.parse(localStorage.getItem('userSession') || 'null');
+    
+    // Manejo seguro del parseo para evitar pantalla en blanco
+    let userSession = null;
+    try {
+        const sessionData = localStorage.getItem('userSession');
+        userSession = sessionData ? JSON.parse(sessionData) : null;
+    } catch (e) {
+        console.error("Error al leer la sesión, limpiando datos...");
+        localStorage.clear();
+    }
 
-    // 1. Si la ruta requiere estar logueado y no hay token, al login
-    if(to.meta.requiresAuth && !token) {
-        next('/login');
+    // 1. Si la ruta requiere auth y no hay token -> Login
+    if (to.meta.requiresAuth && !token) {
+        return next('/login');
     }
-    // 2. Si ya esta logueado y trata de ir al login, lo mandamos su sitio.
-    else if (to.path === '/login' && token) {
-        if (userSession.role === 1) next( '/admin-home');
-        else next('/dashboard');
+
+    // 2. Si ya está logueado e intenta ir al Login o Register -> Redirigir según rol
+    if (token && (to.path === '/login' || to.path === '/register')) {
+        if (userSession?.role === 1) {
+            return next('/admin-home');
+        }
+        return next('/dashboard');
     }
-    else {
-        next();
-    }
+
+    // 3. En cualquier otro caso, permitir el paso
+    next();
 });
 
-export default router
+export default router;
