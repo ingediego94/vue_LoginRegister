@@ -7,6 +7,7 @@ export const getPhotos = async (): Promise<Photo[]> => {
   return response.data;
 };
 
+
 // Esta es la función para subir archivos que creamos antes
 export const uploadPhoto = async (userId: number, file: File): Promise<void> => {
   const formData = new FormData();
@@ -18,4 +19,11 @@ export const uploadPhoto = async (userId: number, file: File): Promise<void> => 
       'Content-Type': 'multipart/form-data'
     }
   });
+};
+
+
+// Esta es la función para eliminar fotos
+export const deletePhoto = async (id: number): Promise<void> => {
+  // Consumimos el endpoint de .NET
+  await http.delete(`/photos/delete/${id}`);
 };
